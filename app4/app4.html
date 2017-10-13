@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <link type = "text/css" rel = "stylesheet" href = "app4.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+        	<div class="row">
+        		<div id = "template" class="col-lg-3 col-sm-6">
+        
+                    <div class="card hovercard">
+                        <div class="cardheader">
+        
+                        </div>
+                        <div class="avatar">
+                            <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                        </div>
+                        <div class="info">
+                            <div class="title">
+                                <a target="_blank" href="http://scripteden.com/">Script Eden</a>
+                            </div>
+                            <div class="desc">Passionate designer</div>
+                            <div class="desc">Curious developer</div>
+                            <div class="desc">Tech geek</div>
+                        </div>
+                        <div class="bottom">
+                            <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" rel="publisher"
+                               href="https://plus.google.com/+ahmshahnuralam">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a class="btn btn-primary btn-sm" rel="publisher"
+                               href="https://plus.google.com/shahnuralam">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
+                                <i class="fa fa-behance"></i>
+                            </a>
+                        </div>
+                    </div>
+        
+                </div>
+        
+        	</div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous">
+        </script>
+        <script>
+        /*global $^*/
+        $.get("https://randomuser.me/api?results=50", function(response) {
+            //console.log(response.results);
+            
+            var userData = response.results;
+            console.log(userData);
+            
+            $.each(userData, function(i, v) {
+                var clone = $("#template").clone();
+                
+                var fullName = v.name.first + " " + v.name.last;
+                
+                clone.find(".info .title a").text(fullName);
+                clone.find(".avatar img").attr(fullName);
+                
+                clone.find(".avatar img").attr("src", v["picture"]["thumbnail"]);
+                
+                clone.removeClass("hidden");
+                clone.attr("id", v.cell);
+                //console.log(clone);
+                
+                
+                
+                $("body .row").append(clone);
+            });
+        });
+        
+        /*
+        $.ajax({
+            url: 'https://randomuser.me/api/',
+            dataType: 'json',
+            success: function(data) {
+            console.log(data);
+        }
+        
+});
+*/
+        </script>
+    </body>
+</html>

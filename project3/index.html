@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <link rel = "stylesheet" href = "main.css">
+       <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <script
+			  src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous">
+        </script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
+    </head>
+    <body>
+        <nav class = "navbar navbar-default">
+            <div class = "container-fluid">
+                <div class = "navbar-header">
+                    <a class = "navbar-brand">Food Filter</a>
+                </div>
+                    <button id = "input-button" class = "btn btn-primary navbar-btn" data-screen = "input-screen">Input</button>
+                    <button id = "text-button" class = "btn btn-success navbar-btn" data-screen = "text-results-screen">Text Results</button>
+                    <button id = "map-button" class = "btn btn-info navbar-btn" data-screen = "map-results-screen">Map Results</button>
+            </div>
+        </nav>
+        
+        <div class = "page-header">
+            <h1>City of Chicago Food Inspection</h1>
+        </div>
+        
+        
+            
+        
+        <div id = "input-screen" class = "container screen">
+            <div class = "jumbotron">
+            <h2>User Input</h2>
+            <form>
+                Inspection Date: 
+                <input id = "date" type = "date" name = "inspection_date" placeholder = "Inspection Date">
+                <br>
+                Facility: 
+                <input id = "facility" type = "text" name = "facility" placeholder = "Facility"></input>
+                <br>
+                Zip:
+                <input id = "zip" type = "text" name = "zip" placeholder = "Zipcode"></input>
+                <br>
+                <button id = "search" type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+                <br>
+            </form>
+            </div>
+        </div>
+        <div id = "text-results-screen" class = "container screen">
+            <div class = "jumbotron">
+            <h2>Text Results</h2>
+            <div id = "text-info">
+                
+            </div>
+            </div>
+        </div>
+        <div id = "map-results-screen" class = "container screen">
+            <div class = "jumbotron">
+            <h2>Map Results</h2>
+            </div>
+        </div>
+        <script>
+            //$("body").html("Hello, world");
+            $(document).ready(function() {
+                
+                function showScreen(idScreen) {
+                    $(".screen").css("display", "none");
+                    $(".screen").removeClass("active");
+                    $("#" + idScreen).css("display", "initial");
+                }
+                $( ".navbar-btn" ).click(function() {
+                    showScreen($(this).data('screen'));
+                });
+                
+                $("#search").click(function() {
+                    var url = "";
+                    var date = $("#date").val();
+                    var facility = $("#facility").val();
+                    var zip = $("#zip").val();
+            
+                                
+                    $.get("https://data.cityofchicago.org/resource/cwig-ma7x.json" /*+ '?' + 'date=' + date + '&' + 'facility=' + facility + '&' + 'zip=' + zip*/, function (response) {
+                        $.each(response, function(key, value) {
+                            var card = "<div class='card' style='width: 20rem;'>" + 
+                                       "<img class='card-img-top' src='...' alt='Card image cap'>" + 
+                                      "<div class='card-block'>" +
+                                        "<h4 class='card-title'>Card title</h4>" +
+                                        "<p class='card-text'></p>" +
+                                        "<a href='#' class='btn btn-primary'>Go somewhere</a>" +
+                                        "</div>" +
+                                        "</div>";
+                            var cardjs = $(card);
+                            
+                        
+                        
+                            cardjs.find(".card-text").append("Inspection ID: " + value.inspection_id + "<br>");
+                            cardjs.find(".card-text").append("DBA Name: " + value.dba_name + "<br>");
+                            cardjs.find(".card-text").append("AKA Name: " + value.aka_name + "<br>");
+                            cardjs.find(".card-text").append("address: " + value.address + "<br>");
+                            cardjs.find(".card-text").append("Inspection Date: " + value.inspection_date + "<br>");
+                            cardjs.find(".card-text").append("Results: " + value.results + "<br>");
+                            
+                            //console.log(cardjs);
+                            
+                            //console.log(value.dba_name + "\n");
+                            $("#text-results-screen").find("#text-info").append(cardjs);
+                        
+                    });
+                        var chicago = {lat: 41.8781, lng: -87.6298};
+                        var map = new google.maps.Map(document.getElementById('map-results-screen'), {
+                          zoom: 12,
+                          center: chicago
+                        });
+    
+    
+                        var infowindow = new google.maps.InfoWindow({
+                            //content: contentString
+                        });
+            
+            
+              
+                  
+    
+                      var marker = new google.maps.Marker({
+                        position: {lat: parseFloat(value.latitude), lng: parseFloat(value.longitude)},
+                        map: map,
+                        title: value.dba_name
+                      });
+                  
+                  marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+                  });
+                });
+          
+        
+            });
+      
+            $("#input-button").click();
+            });
+        </script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTwNVocGL3ZTSfU1ogBsCYxwl1qLSuysU">
+        </script>
+    </body>
+</html>
