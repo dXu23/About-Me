@@ -110,6 +110,7 @@
                 //initMap();
                 
                 
+                var count = 0;
                 $("#search").click(function() {
                     //Step 1: Get user filter information
                     var url = "https://data.cityofchicago.org/resource/cwig-ma7x.json?";
@@ -129,9 +130,8 @@
                     
                     
                     
-                    var count = 0;
                     //Step 3: From URL, retrieve data and modify card
-                    $.get(url /*+ '?' + 'date=' + date + '&' + 'facility=' + facility + '&' + 'zip=' + zip*/, function (response) {
+                    $.get(url, function (response) {
                         $.each(response, function(key, value) {
                             var card = "<div class='card col-lg-3 col-sm-6' style='width: 20rem;'>" + 
                                        "<h4 class = 'card-header'></h4>" +
@@ -205,16 +205,15 @@
                         infowindow.open(map, marker);
                         });
                     });
+                $("#text-results-number").append(count.toString());
                 });
           
         
             });
-            //$("#text-results-number").append(count.toString());
       
         });
         </script>
-        <script async defer
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtr9fO4CrEkAPYVsLunLFX8hd-2f3pQBg">
-       </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGMiX3pMSy_6XAdTHWypRnT5NtaSsRD4A"
+    async defer></script>
     </body>
 </html>
