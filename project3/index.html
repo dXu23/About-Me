@@ -46,6 +46,14 @@
                 <label for = "date">Facility</label> 
                 <input id = "facility" class = "form-control" type = "text" name = "facility" placeholder = "Facility"></input>
                 <br>
+                <label for = "status">Status</label>
+                <select id = "status" class = "form-control">
+                    <option value = "">No Restriction on Status</option>
+                    <option>Pass</option>
+                    <option>Pass w/ Condtions</option>
+                    <option>Fail</option>
+                    <option>Not Ready</option>
+                </select>
                 <label for = "date">Zip</label>
                 <input id = "zip" class = "form-control" type = "text" name = "zip" placeholder = "Zipcode"></input>
                 <br>
@@ -58,8 +66,8 @@
         </div>
         <div id = "text-results-screen" class = "container screen">
             <div class = "jumbotron">
-            <h2>Text Results</h2>
-            <div id = "text-info">
+            <h2 id = "text-results-number">Text Results: </h2>
+            <div id = "text-info" class = "row">
                 
             </div>
             </div>
@@ -67,98 +75,146 @@
         <div id = "map-results-screen" class = "container screen">
             <div class = "jumbotron">
             <h2>Map Results</h2>
+            <div id = "map-results"></div>
             </div>
         </div>
         <script>
             //$("body").html("Hello, world");
             $(document).ready(function() {
                 
+                //showScreen changes screen
                 function showScreen(idScreen) {
                     $(".screen").css("display", "none");
                     $(".screen").removeClass("active");
                     $("#" + idScreen).css("display", "initial");
                 }
+                
+                //click handler
                 $( ".navbar-btn" ).click(function() {
                     showScreen($(this).data('screen'));
                 });
                 
+                //Click on input button to it displays by default
+                $("#input-button").click();
+                
+                
+                //Initialize map. Make sure that it is NOT in for loop. 
+                //function initMap() {
+                var chicago = {lat: 41.8781, lng: -87.6298};
+                var map = new google.maps.Map(document.getElementById('map-results'), {
+                    zoom: 12,
+                    center: chicago
+                });
+            //}
+                
+                //initMap();
+                
+                
                 $("#search").click(function() {
+                    //Step 1: Get user filter information
                     var url = "https://data.cityofchicago.org/resource/cwig-ma7x.json?";
-                    var date = $("#date").val();
-                    var facility = $("#facility").val();
-                    var zip = $("#zip").val();
-                    var parameters = {dateInfo: date,
-                                      facilityInfo: facility, 
-                                      zipInfo: zip};
+                    var parameters = {date:  $("#date").val(),
+                                      facility: $("#facility").val(),
+                                      zip: $("#zip").val(),
+                                      status: $("#status").val()
+                    };
+                    
                                       
+                    //Step 2: Construct URL from object
                     for (key in parameters) {
-                        if (parameter[key] != '') {
+                        if (parameters[key] != '') {
                             url = url + key  + "=" + parameters[key] + '&';
                         }
                     }
-            
-                                
+                    
+                    
+                    
+                    var count = 0;
+                    //Step 3: From URL, retrieve data and modify card
                     $.get(url /*+ '?' + 'date=' + date + '&' + 'facility=' + facility + '&' + 'zip=' + zip*/, function (response) {
                         $.each(response, function(key, value) {
-                            var card = "<div class='card' style='width: 20rem;'>" + 
-                                       "<img class='card-img-top' src='...' alt='Card image cap'>" + 
-                                      "<div class='card-block'>" +
-                                        "<h4 class='card-title'></h4>" +
-                                        "<p class='card-text'></p>" +
-                                        "<a href='#' class='btn btn-primary'>Go somewhere</a>" +
-                                        "</div>" +
-                                        "</div>";
+                            var card = "<div class='card col-lg-3 col-sm-6' style='width: 20rem;'>" + 
+                                       "<h4 class = 'card-header'></h4>" +
+                                       "<div class='card-block'>" +
+                                       "<h4 class='card-title'></h4>" +
+                                       "<h6 class='card-subtitle mb-2 text-muted'></h6>" +
+                                       "<p class='card-text'></p>" +
+                                       "</div>" +
+                                       "</div>";
                             var cardjs = $(card);
                             
                         
-                        
-                            cardjs.find(".card-text").append("Inspection ID: " + value.inspection_id + "<br>");
+                            var resultsData = value.results;
+                            var dbanameData = value.dba_name;
+                            var akanameData = value.aba_name;
+                            var idData = value.inspection_id;
+                            var addressData = value.address;
+                            var dateData = value.inspection_date
+                            var index = dateData.indexOf("T");
+                            dateData = dateData.substr(0, index);
+                    
+                            var contentString = "";
+                            cardjs.find(".card-header").append(value.results);
                             cardjs.find(".card-title").append(value.dba_name);
-                            cardjs.find(".card-text").append("AKA Name: " + value.aka_name + "<br>");
-                            cardjs.find(".card-text").append("address: " + value.address + "<br>");
-                            cardjs.find(".card-text").append("Inspection Date: " + value.inspection_date + "<br>");
-                            cardjs.find(".card-text").append("Results: " + value.results + "<br>");
+                            cardjs.find(".card-subtitle").append(value.aka_name);
+                            contentString = "Inspection ID: " + value.inspection_id + "<br>" +
+                            "address: " + value.address + "<br>" +
+                            "Inspection Date: " + dateData + "<br>";
+                            cardjs.find(".card-block").append(contentString);
+                            //console.log(contentString);
+                            
+                            switch(value.results) {
+                                case "Fail":
+                                    cardjs.find(".card-header").addClass("text-danger");
+                                    break;
+                                case "Pass":
+                                    cardjs.find(".card-header").addClass("text-success");
+                                    break;
+                                case "Pass w/ Conditions":
+                                    cardjs.find(".card-header").addClass("text-warning");
+                                    break;
+                                case "Not Ready":
+                                    cardjs.find(".card-header").addClass("text-info");
+                                    break;
+                                default:
+                                    break;
+                            }
+                            count++;
                             
                             //console.log(cardjs);
                             
                             //console.log(value.dba_name + "\n");
                             $("#text-results-screen").find("#text-info").append(cardjs);
                         
-                        var chicago = {lat: 41.8781, lng: -87.6298};
-                        var map = new google.maps.Map(document.getElementById('map-results-screen'), {
-                          zoom: 12,
-                          center: chicago
-                        });
+                        
     
     
                         var infowindow = new google.maps.InfoWindow({
-                            //content: contentString
+                            content: contentString
                         });
-            
-            
-              
+                        console.log("Latitude: " + value.latitude + ", " + "Longitude: " + value.longitude);
+          
                   
-    
-                      var marker = new google.maps.Marker({
-                        position: {lat: parseFloat(value.latitude), lng: parseFloat(value.longitude)},
-                        map: map,
-                        title: value.dba_name
-                      });
+                        var marker = new google.maps.Marker({
+                            position: {lat: parseFloat(value.latitude), lng: parseFloat(value.longitude)},
+                            map: map,
+                            title: value.dba_name
+                        });
                   
-                  marker.addListener('click', function() {
-                  infowindow.open(map, marker);
-                  });
+                        marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                        });
+                    });
                 });
-            });
           
         
             });
+            //$("#text-results-number").append(count.toString());
       
-            $("#input-button").click();
-            });
+        });
         </script>
         <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTwNVocGL3ZTSfU1ogBsCYxwl1qLSuysU">
-        </script>
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtr9fO4CrEkAPYVsLunLFX8hd-2f3pQBg">
+       </script>
     </body>
 </html>
