@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas id="game" height="400" width="600" style = "border: 1px solid black;"></canvas>
+        
+        <script
+			  src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous"></script>
+		<script>
+    		document.addEventListener('keydown', keyDownHandler, false);
+            document.addEventListener('keyup', keyUpHandler, false);
+            
+            var KeyboardHelper = { left: 37, up: 38, right: 39, down: 40 };
+
+    		var canvas = document.getElementById("game");
+    		var ctx = canvas.getContext('2d');
+		
+    		var game = {score: 0,
+    		lives: 3
+    		};
+    		
+    		var controls = {rightPressed: false,
+    		leftPressed: false}
+    		
+    		function keyDownHandler(event) {
+                if(event.keyCode == KeyboardHelper.left) {
+                    controls.leftPressed = true;
+                }
+                else if(event.keyCode == KeyboardHelper.right) {
+                    controls.rightPressed = true;
+                }
+            }
+    		
+    		function keyUpHandler(event) {
+                if(event.keyCode == KeyboardHelper.left) {
+                    controls.leftPressed = false;
+                }
+                else if(event.keyCode == KeyboardHelper.right) {
+                    controls.rightPressed = false;
+                }
+            }
+    	    var player = {x: 60, 
+    	    y: 60, 
+    	    color: "#3359FC"
+    	    };
+    	    
+    	    var harm = {x: Math.floor(Math.random() * 200),
+    	    y: 0,
+    	    color: "#DA393F"
+    	    }
+    	    
+    	    
+    	    function drawCharacter(object) {
+    	        ctx.beginPath();
+    	        ctx.fillStyle = object.color;
+    	        console.log("X: " + object.x + "," + "Y: " + object.y);
+    	        ctx.arc(object.x, object.y, 20, 0, 2 * Math.PI);
+    	        ctx.stroke();
+    	        ctx.fill();
+    	        ctx.strokeText("Lives: " + game.lives, 10, 50);
+    	    }
+    	    
+    	    function draw() {
+    	        while (game.lives > 0) {
+        	        requestAnimationFrame(draw);
+        	        //1. Clear the canvas to remove images from previous frame
+        	        ctx.clearRect(0, 0, 600, 400);
+        	        
+        	        //2. Save the canvas state
+        	        ctx.save();
+        	        
+        	        //3. Draw the "characters" on screen
+        	        //Player
+        	        if (controls.leftPressed) {
+        	            player.x -= 10;
+        	        }
+        	        if (controls.rightPressed) {
+        	            player.x += 10;
+        	        }
+            	    drawCharacter(player);
+            	    ctx.restore();
+            	    
+            	    //Harm
+            	    if (harm.y > 400) {
+            	        harm.y = 0;
+                	    harm.x = Math.floor(Math.random() * 200);
+            	    }
+            	    else {
+                	    harm.y += 10;
+            	    }
+            	    drawCharacter(harm);
+            	    
+            	    //4. Restore canvas state
+            	    ctx.restore();
+    	        }
+    	    }
+    	    
+    	    requestAnimationFrame(draw);
+    	    
+		</script>
+    </body>
+</html>

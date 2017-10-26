@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+        
+    </head>
+    <body>
+        <form>
+            <label for = "display">Display Name:</label>
+            <input id = "display" type = "text" value = "display"></input>
+            <label for = "locationData">Share Location Data?</label>
+            <input id = "locationData" type = "radio"></input>
+            <span>Last accessed: </span>
+            <button type = "submit"></button>
+        </form>
+        
+        <script
+			  src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous"></script>
+			  <script>
+			      var displayName = "Display Name";
+			      var shareLocationData = false;
+			      var lastAccessed = "now";
+			      var db = new Dexie("MyDB");
+			      db.version(1).stores({settings: "name, value"});
+			      db.on("populate", function() {
+			          db.settings.add();
+			      })
+			  </script>
+    </body>
+</html>
