@@ -11,6 +11,7 @@
 			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
 			  crossorigin="anonymous"></script>
 		<script>
+    		console.log("Hello, world\n");
     		document.addEventListener('keydown', keyDownHandler, false);
             document.addEventListener('keyup', keyUpHandler, false);
             
@@ -43,16 +44,24 @@
                     controls.rightPressed = false;
                 }
             }
+            
     	    var player = {x: 60, 
-    	    y: 60, 
+    	    y: 380, 
+    	    radius: 20, 
     	    color: "#3359FC"
-    	    };
+    	    }
     	    
-    	    var harm = {x: Math.floor(Math.random() * 200),
+    	    var harm = {x: Math.floor(Math.random() * 600),
     	    y: 0,
+    	    radius: 30,
     	    color: "#DA393F"
     	    }
     	    
+    	    var benefit = {x: Math.floor(Math.random() * 600),
+    	    y: 0,
+    	    radius: 15,
+    	    color: "#A6FBC0"
+    	    }
     	    
     	    function drawCharacter(object) {
     	        ctx.beginPath();
@@ -64,39 +73,72 @@
     	        ctx.strokeText("Lives: " + game.lives, 10, 50);
     	    }
     	    
-    	    function draw() {
-    	        while (game.lives > 0) {
-        	        requestAnimationFrame(draw);
-        	        //1. Clear the canvas to remove images from previous frame
-        	        ctx.clearRect(0, 0, 600, 400);
-        	        
-        	        //2. Save the canvas state
-        	        ctx.save();
-        	        
-        	        //3. Draw the "characters" on screen
-        	        //Player
-        	        if (controls.leftPressed) {
-        	            player.x -= 10;
-        	        }
-        	        if (controls.rightPressed) {
-        	            player.x += 10;
-        	        }
-            	    drawCharacter(player);
-            	    ctx.restore();
-            	    
-            	    //Harm
-            	    if (harm.y > 400) {
-            	        harm.y = 0;
-                	    harm.x = Math.floor(Math.random() * 200);
-            	    }
-            	    else {
-                	    harm.y += 10;
-            	    }
-            	    drawCharacter(harm);
-            	    
-            	    //4. Restore canvas state
-            	    ctx.restore();
+    	    function collisionDetect(objchar1, objchar2) {
+    	        var dx = objchar1.x - objchar2.x;
+    	        var dy = objchar1.y - objchar2.y;
+    	        var distance = Math.sqrt(dx * dx + dy * dy);
+    	        if (distance < objchar1.radius + objchar2.radius) {
+    	            return true;
     	        }
+    	        else {
+    	            return false;
+    	        }
+    	    }
+    	    
+    	    function draw() {
+    	        requestAnimationFrame(draw);
+    	        //1. Clear the canvas to remove images from previous frame
+    	        ctx.clearRect(0, 0, 600, 400);
+    	        
+    	        //2. Save the canvas state
+    	        ctx.save();
+        	    //console.log("Hello, world\n");
+    	        
+    	        //3. Draw the "characters" on screen
+    	        //Player
+    	        if (controls.leftPressed) {
+    	            player.x -= 10;
+    	        }
+    	        if (controls.rightPressed) {
+    	            player.x += 10;
+    	        }
+        	    drawCharacter(player);
+        	    drawCharacter(harm);
+        	    drawCharacter(benefit)
+        	    
+        	    //Harm
+        	    if (harm.y > 400) {
+        	        harm.x =  Math.floor(Math.random() * 400);
+        	        harm.y = 0;
+        	    }
+        	    else {
+            	    harm.y += 10;
+        	    }
+        	    
+        	    //Benefit
+        	    if (benefit.y > 400) {
+        	        benefit.x =  Math.floor(Math.random() * 400);
+        	        benefit.y = 0;
+        	    }
+        	    else {
+            	    benefit.y += 15;
+        	    }
+        	    
+        	    if (collisionDetect(player, harm)) {
+        	        game.lives--;
+        	    }
+        	    
+        	    if (collisionDetect(player, benefit)) {
+        	        game.score++;
+        	    }
+        	    
+        	    if (game.lives == 0) {
+        	        alert("GAME OVER!")
+        	        document.location.reload();
+        	    }
+        	    
+        	    //4. Restore canvas state
+        	    ctx.restore();
     	    }
     	    
     	    requestAnimationFrame(draw);
