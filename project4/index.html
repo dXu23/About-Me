@@ -11,7 +11,7 @@
 			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
 			  crossorigin="anonymous"></script>
 		<script>
-    		console.log("Hello, world\n");
+    		//console.log("Hello, world\n");
     		document.addEventListener('keydown', keyDownHandler, false);
             document.addEventListener('keyup', keyUpHandler, false);
             
@@ -66,11 +66,10 @@
     	    function drawCharacter(object) {
     	        ctx.beginPath();
     	        ctx.fillStyle = object.color;
-    	        console.log("X: " + object.x + "," + "Y: " + object.y);
+    	        //console.log("X: " + object.x + "," + "Y: " + object.y);
     	        ctx.arc(object.x, object.y, 20, 0, 2 * Math.PI);
     	        ctx.stroke();
     	        ctx.fill();
-    	        ctx.strokeText("Lives: " + game.lives, 10, 50);
     	    }
     	    
     	    function collisionDetect(objchar1, objchar2) {
@@ -85,6 +84,14 @@
     	        }
     	    }
     	    
+    	    function resetGlobalVariables() {
+    	        
+    	    }
+    	    
+    	    function gameOver() {
+        		document.removeEventListener('keydown', keyDownHandler, false);
+                document.removeEventListener('keyup', keyUpHandler, false);
+    	    }
     	    function draw() {
     	        requestAnimationFrame(draw);
     	        //1. Clear the canvas to remove images from previous frame
@@ -132,6 +139,8 @@
         	        game.score++;
         	    }
         	    
+    	        ctx.strokeText("Lives: " + game.lives, 10, 10);
+    	        ctx.strokeText("Score: " + game.score, 10, 20);
         	    if (game.lives == 0) {
         	        alert("GAME OVER!")
         	        document.location.reload();
