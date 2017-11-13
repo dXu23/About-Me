@@ -5,7 +5,7 @@ html, body {
   background-color: #f2f2f2;
 }
 
-.shrine-product-card {
+.product-card {
   margin: 0 auto;
   width: 320px;
   border-radius: 4px;
@@ -13,25 +13,25 @@ html, body {
   background-color: white;
 }
 
-.shrine-product-card__price {
+.product-card__price {
   display: block;
   text-align: right;
 }
 
-.shrine-product-card__image {
+.product-card__image {
   margin: 0 auto;
 }
 
-#shrine-header {
+#header {
   background-color: var(--mdc-theme-background);
   color: var(--mdc-theme-text-primary-on-background);
 }
 
-#shrine-header .mdc-toolbar__section {
+#header .mdc-toolbar__section {
   overflow: visible;
 }
 
-#shrine-logo {
+#logo {
   background: url(assets/logo.png) left center no-repeat;
   background-size: contain;
   width: 100%;
@@ -39,7 +39,7 @@ html, body {
 }
 
 /* Hide actual text for screen readers */
-#shrine-logo > span {
+#logo > span {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -50,44 +50,48 @@ html, body {
   border: 0;
 }
 
-#shrine-nav-icon {
+#nav-icon {
   width: 24px;
   height: 24px;
   margin-right: 40px;
   text-decoration: none;
 }
 
-#shrine-nav-icon:visited,
-#shrine-nav-icon:active,
-#shrine-nav-icon:focus {
+#nav-icon:visited,
+#nav-icon:active,
+#nav-icon:focus {
   color: var(--mdc-theme-text-primary-on-background);
 }
 
-#shrine-nav-menu {
+#nav-menu {
   text-transform: uppercase;
   padding-left: 16px;
 }
 
-#shrine-nav-menu .mdc-temporary-drawer__drawer {
+#nav-menu .mdc-temporary-drawer__drawer {
   background-color: #fafafa;
 }
 
-#shrine-nav-menu .mdc-temporary-drawer__header {
+#nav-menu .mdc-temporary-drawer__header {
   background: url(assets/logo.png) 32px 32px no-repeat;
   background-size: 30%;
 }
 
-#shrine-nav-menu .mdc-temporary-drawer__header::before {
+#nav-menu .mdc-temporary-drawer__header::before {
   padding-top: 30%;
 }
 
-#shrine-nav-menu .mdc-temporary-drawer__content {
+#nav-menu .mdc-temporary-drawer__content {
   background: url(assets/diamond.svg) -32px bottom no-repeat;
   background-size: 50%;
 }
 
-#shrine-nav-menu .mdc-list-item {
+#nav-menu .mdc-list-item {
   height: 32px;
   padding-left: 32px;
   letter-spacing: .2em;
+}
+
+.screen {
+  display: hidden;
 }
