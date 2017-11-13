@@ -25,7 +25,7 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open('airhorner').then(cache => {
       return cache.addAll([
-        `/`,
+        `./`,
         `./index.html?timestamp=${timeStamp}`,
         `./styles/main.css?timestamp=${timeStamp}`,
         `./scripts/main.min.js?timestamp=${timeStamp}`,
@@ -37,6 +37,7 @@ self.addEventListener('install', e => {
     })
   )
 });
+console.log("Hello, world!");
 
 self.addEventListener('activate',  event => {
   event.waitUntil(self.clients.claim());
@@ -49,3 +50,21 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
+/*
+importScripts('./cache-polyfill.js');
+self.addEventListener('install', function(e) {
+    e.waitUntil( caches.open('airhorner').then(function(cache) {
+        return cache.addAll([
+            './',
+            './index.html',
+            './index.html?homescreen=1',
+            './?homescreen=1',
+            './styles/main.css',
+            './scripts/main.min.js',
+            './sounds/airhorn.mp3'
+        ]);
+    })
+    );
+});
+*/
