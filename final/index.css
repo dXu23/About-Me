@@ -1,0 +1,65 @@
+fieldset {
+        padding: 24px;
+        padding-top: 0;
+        padding-bottom: 16px;
+      }
+
+fieldset .mdc-button {
+    margin: 16px;
+}
+
+fieldset legend {
+        display: block;
+        padding: 16px;
+        padding-top: 64px;
+        padding-bottom: 24px;
+      }
+
+.demo-title {
+        padding: 0 40px 40px;
+      }
+      
+.panels {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.panel {
+        display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+.dots {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 4px;
+        padding-bottom: 16px;
+}
+
+.dot {
+    margin: 0 4px;
+    border-radius: 50%;
+    border: 1px solid #64DD17;
+    width: 20px;
+    height: 20px;
+}
+
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot.active {
+    background-color: #64DD17;
+    border-color: #64DD17;
+}
+
+.my-modified-toolbar-section {
+    position: absolute;
+    right: 0;
+    bottom: -16px;
+}

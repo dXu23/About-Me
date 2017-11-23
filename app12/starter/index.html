@@ -19,7 +19,7 @@
 <body class="mdc-typography">
   <header id="shrine-header"
         class="mdc-toolbar mdc-toolbar--fixed mdc-theme--text-primary-on-background">
-  <div class="mdc-toolbar__row">
+  <div class="mdc-toolbar__row screen">
     <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
       <a id="shrine-nav-icon" class="material-icons mdc-ripple-surface"  
     href="#" 
@@ -94,12 +94,22 @@
   </main>
   <script src="https://unpkg.com/material-components-web@0.9.1/dist/material-components-web.min.js">
 </script>
+<script
+  src="http://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
 <script>
   mdc.autoInit()
   document.getElementById('shrine-nav-icon').addEventListener('click', function(evt) {
     evt.preventDefault();
     document.getElementById('shrine-nav-menu').MDCTemporaryDrawer.open = true;
   });
+  
+  function showScreen(idScreen) {
+    $(".screen").css("display", "none");
+    $(".screen").removeClass("active");
+    $("#" + idScreen).css("display", "initial");
+  }
   </script>
 </body>
 </html>

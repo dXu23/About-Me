@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset = "utf-8">
-        <link rel = "stylesheet" type = "text/css" href = "bigproject.css">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Big project</title>
-        <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
-    </head>
-    <body class = "mdc-typography">
-        <nav class="mdc-temporary-drawer__content mdc-list">
-            <a href = "#" class = "mdc-list-item">One</a>
-            <a href = "#" class = "mdc-list-item">Two</a>
-            <a href = "#" class = "mdc-list-item">Three</a>
-        </nav>
-        <div id = "one" class = "screen">
-            <h2>Hello, world!</h2>
-        </div>
-        <div id = "two" class = "screen">
-            <h2>Foo, world!</h2>
-        </div>
-        <div id = "three" class = "screen">
-            <h2>Good night, world!</h2>
-        </div>
-        <script>
-        $(document).ready(function() {
-            function showScreen(idScreen) {
-                $(".screen").css("display", "hidden");
-            }
-            
-        });
-        </script>
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>repl.it</title>
+    <link href="index.css" rel="stylesheet" type="text/css" />
+    <link rel = "stylesheet" href = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <style>
+    /*
+    :root {
+    --mdc-theme-primary: #4536C4;
+  }
+  */
+  </style>
+  </head>
+  <body>
+<section>
+        <fieldset>
+          <legend class="mdc-typography--title">Within Toolbar, Dynamic Content Control</legend>
+          <div class="mdc-toolbar" id="dynamic-demo-toolbar">
+            <div class="mdc-toolbar__row">
+              <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                <nav id="dynamic-tab-bar" class="mdc-tab-bar mdc-tab-bar--indicator-accent" role="tablist">
+                  <a role="tab" aria-controls="panel-1"
+                     class="mdc-tab mdc-tab--active" href="#panel-1">Item One</a>
+                  <a role="tab" aria-controls="panel-2"
+                     class="mdc-tab" href="#panel-2">Item Two</a>
+                  <a role="tab" aria-controls="panel-3"
+                     class="mdc-tab" href="#panel-3">Item Three</a>
+                  <span class="mdc-tab-bar__indicator"></span>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <section>
+            <div class="panels">
+              <p class="panel active" id="panel-1" role="tabpanel" aria-hidden="false">Item One</p>
+              <p class="panel" id="panel-2" role="tabpanel" aria-hidden="true">Item Two</p>
+              <p class="panel" id="panel-3" role="tabpanel" aria-hidden="true">Item Three</p>
+            </div>
+            <div class="dots">
+              <a class="dot active" data-trigger="panel-1" href="#panel-1"></a>
+              <a class="dot" data-trigger="panel-2" href="#panel-2"></a>
+              <a class="dot" data-trigger="panel-3" href="#panel-3"></a>
+            </div>
+          </section>
+        </fieldset>
+      </section>
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<script src = "index.js"></script>
+<!--<script>window.mdc.autoInit();</script>-->
+</body>
 </html>
