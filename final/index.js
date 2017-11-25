@@ -1,11 +1,15 @@
+//panel javascript
 var dynamicTabBar = window.dynamicTabBar = new mdc.tabs.MDCTabBar(document.querySelector('#dynamic-tab-bar'));
+
+//Variables for selecting dots and panels
 var dots = document.querySelector('.dots');
 var panels = document.querySelector('.panels');
 
 dynamicTabBar.tabs.forEach(function(tab) {
-  tab.preventDefaultOnClick = true;
+    tab.preventDefaultOnClick = true;
 });
 
+//Function that updates the dots when clicked
 function updateDot(index) {
   var activeDot = dots.querySelector('.dot.active');
   if (activeDot) {
@@ -51,3 +55,7 @@ dots.addEventListener('click', function (evt) {
   updatePanel(dotIndex);
   updateDot(dotIndex);
 })
+
+//console.log("Hello, world!");
+
+mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
