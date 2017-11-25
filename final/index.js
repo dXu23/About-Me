@@ -1,3 +1,5 @@
+
+
 //panel javascript
 var dynamicTabBar = window.dynamicTabBar = new mdc.tabs.MDCTabBar(document.querySelector('#dynamic-tab-bar'));
 
