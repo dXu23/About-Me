@@ -61,3 +61,7 @@ dots.addEventListener('click', function (evt) {
 //console.log("Hello, world!");
 
 mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
+
+$('.datepicker').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss'
+});

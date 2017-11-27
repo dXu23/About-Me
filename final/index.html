@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>repl.it</title>
+    <title>Final</title>
     <link href="index.css" rel="stylesheet" type="text/css" />
     <link rel = "stylesheet" href = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <style>
-    /*
-    :root {
-    --mdc-theme-primary: #4536C4;
-  }
-  */
-  </style>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src = "https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+    <link rel = "stylesheet" href = "https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css">
   </head>
   <body>
   <section>
@@ -33,18 +34,34 @@
         <div class="panels">
           <div class="panel active" id="panel-1" role="tabpanel" aria-hidden="false">
             <h2 class = "mdc-typography--display2">Pending Promises</h2>
+            <ul id = "pending" class = "mdc-list">
+            </ul>
           </div>
           <div class="panel" id="panel-2" role="tabpanel" aria-hidden="true">
             <h2 class = "mdc-typography--display2">Make a Promise</h2>
-            <section class="hero">
-              <div class="mdc-text-field">
-              <input type="text" class="mdc-text-field__input" id="my-text-field" aria-controls="my-text-field-helptext">
-              <label for="my-text-field" class="mdc-text-field__label">Text Field</label>
-              <div class="mdc-text-field__bottom-line"></div>
-        </div>
-      </section>
-
-          </div>
+            <section class = "hero">
+              <form action = "#">
+                <div>
+                  <div class = "mdc-form-field">
+                    <div class="mdc-text-field" data-mdc-auto-init = "MDCTextField">
+                      <input type="text" class="mdc-text-field__input" id="promiseName" aria-controls="my-text-field-helptext">
+                      <label for="promiseName" class="mdc-text-field__label">Promise Name</label>
+                      <div class="mdc-text-field__bottom-line"></div>
+                    </div>
+                  </div>
+                  <!-- Date Time picker not implemented in MDC-->
+                  <div class = "mdc-form-field">
+                    <div class="mdc-text-field">
+                      <input type="text" class="mdc-text-field__input" id="dateTime" aria-controls="my-text-field-helptext">
+                      <label for = "dateTime" class = "mdc-text-field__label">YYYY-MM-DDTHH:mm</label>
+                      <div class="mdc-text-field__bottom-line"></div>
+                    </div>
+                  </div>
+                </div>
+    
+                <button id = "submitPromise" class = "mdc-button mdc-button--raised mdc-ripple-surface">Submit</button>
+              </form>
+            </section>
           <div class="panel" id="panel-3" role="tabpanel" aria-hidden="true">
             <h2 class = "mdc-typography--display2">Completed and Failed Promises</h2>
           </div>
@@ -58,6 +75,7 @@
       </section>
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 <script src = "index.js"></script>
+<script src = "database.js"></script>
 <!--<script>window.mdc.autoInit();</script>-->
 </body>
 </html>
