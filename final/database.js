@@ -3,19 +3,34 @@
 var db = new Dexie("promise_DB");
 db.version(1).stores({
     //Promise Name, datetime it is due, and the priority of promise
-    promises: "++id, name, datetime, priority" 
+    promises: "++id, name, datetime, priority, status" 
 });
 
+var priorityEnum = {
+    A: 1,
+    B: 2,
+    C: 3
+}
 
-function toHTML(name, date) {
-    return "<li class = 'mdc-list-item>" + "<span class = 'mdc-list-item__text'>" + name 
-    + "</span>" + "<span class = 'mdc-list-item__text__secondary'>" + date + "</span>" + "</li>";
+function toHTML(name, id, priority, date) {
+    return "<li id = '" + id + "'" + " class = 'mdc-list-item '" + priority + ">\n" + "<span class = 'mdc-list-item__text'>\n" + name 
+     + "<span class = 'mdc-list-item__text__secondary'>\n" + date + "\n</span>\n" + "\n</span>\n" + "</li>\n";
+}
+
+function check() {
+    if ($("#A").is(":checked")) {
+        return 'A';
+    } else if ($("#B").is(":checked")) {
+        return 'B';
+    } else if ($("#C").is(":checked")) {
+        return 'C';
+    }
 }
 
 function render(objStore, mode) {
     var scontent = "";
     objStore.orderBy(mode).each(function(promise) {
-        scontent += toHTML(promise.name, promise.datetime);
+        scontent += toHTML(promise.name, promise.id, promise.priority, promise.datetime);
     }).then(function() {
         console.log(scontent);
         $("#pending").html(scontent);
@@ -44,15 +59,8 @@ $(document).ready(function() {
             //console.log("dateTime: " + $("#dateTime").val());
             // Append the promise to the objectStore promiseList which is in the database promiseDB
             var html;
-            db.promises.put({name: $("#promiseName").val(), datetime: $("#dateTime").val()}).then(function() {
+            db.promises.put({name: $("#promiseName").val(), priority: check(), datetime: $("#dateTime").val()}).then(function() {
                 render(db.promises, "datetime");
-                /*
-                db.promises.orderBy("dateTime").each(function(item) {
-                    html += "<li class = 'mdc-list-item'>" + item.name + "</li>";
-                }).then(function() {
-                    console.log(html);
-                    $("#pending").html(html);
-                    */
             }).catch(function(error) {
                 console.log("Error:" + error);
             });
