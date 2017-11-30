@@ -1,4 +1,4 @@
-fieldset {
+fieldset 
         padding: 24px;
         padding-top: 0;
         padding-bottom: 16px;
@@ -64,34 +64,42 @@ fieldset legend {
     bottom: -16px;
 }
 
-.mdc-theme--dark {
-        --mdc-theme-primary: var(--mdc-theme-secondary, #64dd17);
-        background-color: #303030;
-      }
 
-      input[type="checkbox"]:disabled + label {
-        opacity: .4;
-      }
+input[type="checkbox"]:disabled + label {
+opacity: .4;
+}
 
-      .example {
-        margin: 24px;
-        padding: 24px;
-      }
+.example {
+margin: 24px;
+padding: 24px;
+}
 
-      .hero .mdc-text-field {
-        min-width: 240px;
-      }
+.hero .mdc-text-field {
+min-width: 240px;
+}
 
-      .demo-note {
-        padding: 20px;
-        margin: 20px 0;
-        background-color: #f2f2f2;
-      }
+.demo-note {
+padding: 20px;
+margin: 20px 0;
+background-color: #f2f2f2;
+}
 
-      .custom-text-field-input {
-        width: 300px;
-      }
+.custom-text-field-input {
+width: 300px;
+}
 
-      .full-width-textarea-example {
-        margin-top: 16px;
-      }
+.full-width-textarea-example {
+margin-top: 16px;
+}
+
+.A {
+    background-color: rgba(255, 64, 129, 0.8);
+}
+
+.B {
+    background-color: rgba(255, 64, 129, 0.6);
+}
+
+.C {
+    background-color: rgba(255, 64, 129, 0.4);
+}

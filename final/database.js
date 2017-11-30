@@ -1,4 +1,3 @@
-
 //Declare the database
 var db = new Dexie("promise_DB");
 db.version(1).stores({
@@ -13,7 +12,18 @@ var priorityEnum = {
 }
 
 function toHTML(name, id, priority, date) {
-    return "<li id = '" + id + "'" + " class = 'mdc-list-item '" + priority + ">\n" + "<span class = 'mdc-list-item__text'>\n" + name 
+    /*
+    var item = "<li id = '' class = 'mdc-list-item'>\n <span class = 'mdc-list-item__text'> </span class = 'mdc-list-item__text__secondary'></span></li>";
+    var itemJS = $(item);
+    itemJS.attr('id', id);
+    itemJS.addClass(priority);
+    itemJS.find('.mdc-list-item__text').prepend(name);
+    itemJS.find('.mdc-list-item__text__secondary').append(date)
+    console.log("toHTML was a success!");
+    return itemJS;
+    */
+    
+    return "<li id = '" + id + "'" + " class = 'mdc-list-item " + priority + "'>\n" + "<span class = 'mdc-list-item__text'>\n" + name 
      + "<span class = 'mdc-list-item__text__secondary'>\n" + date + "\n</span>\n" + "\n</span>\n" + "</li>\n";
 }
 
@@ -30,8 +40,11 @@ function check() {
 function render(objStore, mode) {
     var scontent = "";
     objStore.orderBy(mode).each(function(promise) {
-        scontent += toHTML(promise.name, promise.id, promise.priority, promise.datetime);
+        //console.log(toHTML(promise.name, promise.id, promise.priority, promise.datetime));
+        scontent += toHTML(promise.name, promise.id, promise.priority, promise.datetime); //+= toHTML(promise.name, promise.id, promise.priority, promise.datetime);
+        //console.log("Foo bar!");
     }).then(function() {
+        //console.log("3.14159265358979323846264338327950288419716939937510582097494459230781640628");
         console.log(scontent);
         $("#pending").html(scontent);
     }).catch(function(error) {
@@ -51,6 +64,7 @@ $(document).ready(function() {
     
     // onSubmit function
     function onSubmit() {
+        console.log("in onSubmit...");
         //Open the database
         // Add the promise name and its due date to the database
         db.open().then(function() {
