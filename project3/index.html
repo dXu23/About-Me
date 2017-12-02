@@ -185,11 +185,10 @@
                             
                             //console.log(value.dba_name + "\n");
                             $("#text-results-screen").find("#text-info").append(cardjs);
-                    });
+                        });
                         
+                        $("#text-results-number").append(count.toString());
                         
-    
-    
                         var infowindow = new google.maps.InfoWindow({
                             content: contentString
                         });
@@ -205,7 +204,6 @@
                         marker.addListener('click', function() {
                         infowindow.open(map, marker);
                         });
-                $("#text-results-number").append(count.toString());
                 });
           
         
