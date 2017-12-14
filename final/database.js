@@ -24,7 +24,13 @@ function toHTML(name, id, priority, date) {
     */
     
     return "<li id = '" + id + "'" + " class = 'mdc-list-item " + priority + "'>\n" + "<span class = 'mdc-list-item__text'>\n" + name 
-     + "<span class = 'mdc-list-item__text__secondary'>\n" + date + "\n</span>\n" + "\n</span>\n" + "</li>\n";
+     + "<span class = 'mdc-list-item__text__secondary'>\n" + date + "\n</span>\n" + "\n</span>\n" +
+     "<button class = 'mdc-button mdc-button--raised done'><i class = 'material-icons mdc-button__icon'>done</i>Done</button>" + "</li>\n";
+}
+
+function done(e) {
+    console.log("In function done...\n");
+    e.currentTarget.remove();
 }
 
 function check() {
@@ -37,9 +43,9 @@ function check() {
     }
 }
 
-function render(objStore, mode) {
+function render(mode) {
     var scontent = "";
-    objStore.orderBy(mode).each(function(promise) {
+    db.promises.orderBy(mode).each(function(promise) {
         //console.log(toHTML(promise.name, promise.id, promise.priority, promise.datetime));
         scontent += toHTML(promise.name, promise.id, promise.priority, promise.datetime); //+= toHTML(promise.name, promise.id, promise.priority, promise.datetime);
         //console.log("Foo bar!");
@@ -85,6 +91,6 @@ $(document).ready(function() {
     }
     
     document.getElementById("submitPromise").addEventListener("click", onSubmit);
-
+    document.getElementByClassName("done").addEventListener("click", done);
     
 });
