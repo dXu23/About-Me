@@ -14,14 +14,14 @@ var priorityEnum = {
 function toHTML(promise) {
     var item = "<li id = '' class = 'mdc-list-item'>\n" + 
     "<span class = 'mdc-list-item__text'> \n" +  
-    "<span class = 'mdc-list-item__text__secondary'></span>\n" + 
+    "<span class = 'mdc-list-item__secondary-text'></span>\n" + 
     "</span>\n" + 
     "</li>";
     var itemJS = $(item);
     itemJS.attr('id', promise.id);
     itemJS.addClass(promise.priority);
     itemJS.find('.mdc-list-item__text').prepend(promise.name);
-    itemJS.find('.mdc-list-item__text__secondary').append(promise.date)
+    itemJS.find('.mdc-list-item__secondary-text').append(promise.datetime)
     //console.log("toHTML was a success!");
     return itemJS;
 }
@@ -44,7 +44,7 @@ function check() {
 function render(mode) {
     var scontent = $("<ul id = 'pending'></ul>");
     db.promises.orderBy(mode).each(function(promise) {
-        scontent.append(toHTML(promise.name, promise.id, promise.priority, promise.datetime)); 
+        scontent.append(toHTML(promise)); 
     }).then(function() {
         console.log(scontent);
         $("#pendDiv").html(scontent);
