@@ -11,21 +11,19 @@ var priorityEnum = {
     C: 3
 }
 
-function toHTML(name, id, priority, date) {
-    /*
-    var item = "<li id = '' class = 'mdc-list-item'>\n <span class = 'mdc-list-item__text'> </span class = 'mdc-list-item__text__secondary'></span></li>";
+function toHTML(promise) {
+    var item = "<li id = '' class = 'mdc-list-item'>\n" + 
+    "<span class = 'mdc-list-item__text'> \n" +  
+    "<span class = 'mdc-list-item__text__secondary'></span>\n" + 
+    "</span>\n" + 
+    "</li>";
     var itemJS = $(item);
-    itemJS.attr('id', id);
-    itemJS.addClass(priority);
-    itemJS.find('.mdc-list-item__text').prepend(name);
-    itemJS.find('.mdc-list-item__text__secondary').append(date)
-    console.log("toHTML was a success!");
+    itemJS.attr('id', promise.id);
+    itemJS.addClass(promise.priority);
+    itemJS.find('.mdc-list-item__text').prepend(promise.name);
+    itemJS.find('.mdc-list-item__text__secondary').append(promise.date)
+    //console.log("toHTML was a success!");
     return itemJS;
-    */
-    
-    return "<li id = '" + id + "'" + " class = 'mdc-list-item " + priority + "'>\n" + "<span class = 'mdc-list-item__text'>\n" + name 
-     + "<span class = 'mdc-list-item__text__secondary'>\n" + date + "\n</span>\n" + "\n</span>\n" +
-     "<button class = 'mdc-button mdc-button--raised done'><i class = 'material-icons mdc-button__icon'>done</i>Done</button>" + "</li>\n";
 }
 
 function done(e) {
@@ -44,15 +42,12 @@ function check() {
 }
 
 function render(mode) {
-    var scontent = "";
+    var scontent = $("<ul id = 'pending'></ul>");
     db.promises.orderBy(mode).each(function(promise) {
-        //console.log(toHTML(promise.name, promise.id, promise.priority, promise.datetime));
-        scontent += toHTML(promise.name, promise.id, promise.priority, promise.datetime); //+= toHTML(promise.name, promise.id, promise.priority, promise.datetime);
-        //console.log("Foo bar!");
+        scontent.append(toHTML(promise.name, promise.id, promise.priority, promise.datetime)); 
     }).then(function() {
-        //console.log("3.14159265358979323846264338327950288419716939937510582097494459230781640628");
         console.log(scontent);
-        $("#pending").html(scontent);
+        $("#pendDiv").html(scontent);
     }).catch(function(error) {
         console.log("Error in function render: " + error);
     })
@@ -63,7 +58,7 @@ $(document).ready(function() {
     // function onSumbit is called
     
     db.open().then(function() {
-        render(db.promises, "datetime");
+        render("datetime");
     }).catch(function(error) {
         console.log("Error in initial render...:" + error);
     });
@@ -80,7 +75,7 @@ $(document).ready(function() {
             // Append the promise to the objectStore promiseList which is in the database promiseDB
             var html;
             db.promises.put({name: $("#promiseName").val(), priority: check(), datetime: $("#dateTime").val()}).then(function() {
-                render(db.promises, "datetime");
+                render("datetime");
             }).catch(function(error) {
                 console.log("Error:" + error);
             });
@@ -91,6 +86,5 @@ $(document).ready(function() {
     }
     
     document.getElementById("submitPromise").addEventListener("click", onSubmit);
-    document.getElementByClassName("done").addEventListener("click", done);
     
 });
