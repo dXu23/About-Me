@@ -37,9 +37,10 @@
           <div class="panel active" id="panel-1" role="tabpanel" aria-hidden="false">
             <h2 class = "mdc-typography--display2">Pending Promises</h2>
             <div id = "pendDiv"></div>
-          <div class="panel" id="panel-2" role="tabpanel" aria-hidden="true">
-            <h2 class = "mdc-typography--display2">Make a Promise</h2>
-            <section class = "hero">
+          </div>
+            <div class="panel" id="panel-2" role="tabpanel" aria-hidden="true">
+              <h2 class = "mdc-typography--display2">Make a Promise</h2>
+              <section class = "hero">
               <form action = "#">
                 <div>
                   <div class = "mdc-form-field">
@@ -60,53 +61,52 @@
                   <div class = "priorityPicker">
                     <h3 class = "mdc-typography">Priority of Promise</h3>
                     <div class="demo-radio-row">
-          <div class="mdc-form-field">
-            <div class="mdc-radio">
-              <input class="mdc-radio__native-control" type="radio" id="A" checked name="ex0-default">
-              <div class="mdc-radio__background">
-                <div class="mdc-radio__outer-circle"></div>
-                <div class="mdc-radio__inner-circle"></div>
-              </div>
-            </div>
-            <label id="A-label" for="A">A</label>
-          
-            <div class="mdc-radio">
-              <input class="mdc-radio__native-control" type="radio" id="B" name="ex0-default">
-              <div class="mdc-radio__background">
-                <div class="mdc-radio__outer-circle"></div>
-                <div class="mdc-radio__inner-circle"></div>
-              </div>
-            </div>
-            <label id="B-label" for="B">B</label>
-            
-            <div class="mdc-radio">
-              <input class="mdc-radio__native-control" type="radio" id="C" name="ex0-default">
-              <div class="mdc-radio__background">
-                <div class="mdc-radio__outer-circle"></div>
-                <div class="mdc-radio__inner-circle"></div>
-              </div>
-            </div>
-            <label id="C-label" for="C">C</label>
-          </div>
-        </div>
-                    
-                    
+                      <div class="mdc-form-field">
+                        <div class="mdc-radio">
+                          <input class="mdc-radio__native-control" type="radio" id="A" checked name="ex0-default">
+                          <div class="mdc-radio__background">
+                            <div class="mdc-radio__outer-circle"></div>
+                            <div class="mdc-radio__inner-circle"></div>
+                          </div>
+                        </div>
+                        <label id="A-label" for="A">A</label>
+                      
+                        <div class="mdc-radio">
+                          <input class="mdc-radio__native-control" type="radio" id="B" name="ex0-default">
+                          <div class="mdc-radio__background">
+                            <div class="mdc-radio__outer-circle"></div>
+                            <div class="mdc-radio__inner-circle"></div>
+                          </div>
+                        </div>
+                        <label id="B-label" for="B">B</label>
+                        
+                        <div class="mdc-radio">
+                          <input class="mdc-radio__native-control" type="radio" id="C" name="ex0-default">
+                          <div class="mdc-radio__background">
+                            <div class="mdc-radio__outer-circle"></div>
+                            <div class="mdc-radio__inner-circle"></div>
+                          </div>
+                        </div>
+                        <label id="C-label" for="C">C</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
-    
                 <button id = "submitPromise" class = "mdc-button mdc-button--raised mdc-ripple-surface">Submit</button>
               </form>
             </section>
+          </div>
+          <!-- Panel 3 -->
           <div class="panel" id="panel-3" role="tabpanel" aria-hidden="true">
             <h2 class = "mdc-typography--display2">Completed and Failed Promises</h2>
           </div>
-            </div>
             <div class="dots">
               <a class="dot active" data-trigger="panel-1" href="#panel-1"></a>
               <a class="dot" data-trigger="panel-2" href="#panel-2"></a>
               <a class="dot" data-trigger="panel-3" href="#panel-3"></a>
             </div>
-          </section>
+        </div>
+        </section>
       </section>
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 <script src = "index.js"></script>
